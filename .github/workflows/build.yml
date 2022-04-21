@@ -7,10 +7,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
-      # - name: Get short SHA
-      #   id: slug
-      #   run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
-      
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+
       - name: esp-idf build
         uses: espressif/esp-idf-ci-action@main
         with:
@@ -20,5 +20,5 @@ jobs:
       - name: archive build
         uses: actions/upload-artifact@v3
         with:
-          name: build
+          name: build-${{ steps.slug.outputs.sha7 }}
           path: build
