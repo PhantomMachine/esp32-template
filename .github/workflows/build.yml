@@ -1,0 +1,24 @@
+name: Build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+
+      # - name: Get short SHA
+      #   id: slug
+      #   run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+      
+      - name: esp-idf build
+        uses: espressif/esp-idf-ci-action@main
+        with:
+          esp_idf_version: v4.4
+          path: '.'
+
+      - name: archive build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
