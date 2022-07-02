@@ -12,10 +12,19 @@
 #include "freertos/task.h"
 #include "esp_chip_info.h"
 #include "esp_spi_flash.h"
+#include "esp_mac.h"
+uint64_t getEfuseMac(void) {
+    uint64_t _chipmacid = 0LL;
+    esp_efuse_mac_get_default((uint8_t*) (&_chipmacid));
+    return _chipmacid;
+}
 
 void app_main(void)
 {
     printf("Hello world!\n");
+
+    uint64_t chip_id = getEfuseMac();
+    printf("%#010llx\n", chip_id);
 
     /* Print chip information */
     esp_chip_info_t chip_info;
